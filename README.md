@@ -9,6 +9,10 @@ linkerd for service mesh, load balance metrics and tracing etc
 + 控制面
 + 数据面
 + UI
++ 监控
++ Jaeger
++ Upgrade
++ 轮换根证书
 
 ## 安装
 
@@ -22,12 +26,14 @@ linkerd for service mesh, load balance metrics and tracing etc
 4. 创建 **linkerd** 使用的 **issuer**(这里可以是 **issuer** 或者 **clusterissuer**)
 
 安装 **step** 生成根证书
+
 ```sh
   wget https://dl.step.sm/gh-release/cli/docs-cli-install/v0.20.0/step-cli_0.20.0_amd64.deb
   dpkg -i step-cli_0.20.0_amd64.deb
 ```
 
 linkerd-component-ns.yaml
+
 ```yaml
 apiVersion: v1
 Kink: Namespace
@@ -48,6 +54,7 @@ metadata:
 ## root
 
 root cert
+
 ```sh
   step certificate create \
     root.linkerd.cluster.local ca.crt ca.key  \
@@ -62,6 +69,7 @@ root cert
 ```
 
 linkerd-control-issuer.yaml
+
 ```yaml
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -74,6 +82,7 @@ spec:
 ```
 
 linkerd-control-certificate.yaml
+
 ```yaml
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -103,10 +112,12 @@ spec:
 **注意这里需要设置自定义的域名**,共需要设置三个参数
 
 control
+
 + cluster-domain
 + identity-trust-domain
 
 viz
+
 + clusterDomain
 
 ```sh
@@ -126,8 +137,11 @@ viz
     linkerd/linkerd2 \
     -n linkerd
 ```
+
 ## webhook
+
 webhook cert
+
 ```sh
   step certificate create \
     webhook.linkerd.cluster.local ca.crt ca.key \
@@ -150,6 +164,7 @@ webhook cert
 ```
 
 linkerd-webhook-issuer.yaml
+
 ```yaml
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -180,6 +195,7 @@ spec:
 ```
 
 linkerd-webhook-certificate.yaml
+
 ```yaml
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -310,6 +326,7 @@ spec:ls
 ```
 
 **注意这里需要设置 jaeger 的地址**
+
 ```sh
   helm install linkerd-viz \
     --set clusterDomain=linkerd.npool.top
@@ -335,6 +352,7 @@ spec:ls
 ## ingress
 
 linkerd-traefik.yaml
+
 ```yaml
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware

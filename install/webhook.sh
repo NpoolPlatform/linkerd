@@ -1,5 +1,6 @@
-#/bin/bash
+#!/usr/bin/env bash
 
 # fast fail
-set -eo pipefail
-
+set -o errexit
+set -o nounset
+set -o pipefail

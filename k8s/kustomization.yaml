@@ -1,0 +1,21 @@
+generatorOptions:
+  disableNameSuffixHash: true
+secretGenerator:
+  - name: webhook-issuer-tls
+    namespace: linkerd
+    type: kubernetes.io/tls
+    files:
+      - tls.key=issuer.key
+      - tls.crt=issuer.crt
+  - name: webhook-issuer-tls
+    namespace: linkerd-viz
+    type: kubernetes.io/tls
+    files:
+      - tls.key=issuer.key
+      - tls.crt=issuer.crt
+  - name: webhook-issuer-tls
+    namespace: linkerd-jaeger
+    type: kubernetes.io/tls
+    files:
+      - tls.key=issuer.key
+      - tls.crt=issuer.crt
