@@ -12,7 +12,7 @@ helm repo add linkerd https://helm.linkerd.io/stable
 # dep resource
 # 1. root ca
 # 2. issuer crt/key
-helm install linkerd2 \
+helm upgrade -i linkerd2 \
   --set installNamespace=false \
   --cluster-domain=linkerd.npool.top \
   --identity-trust-domain=linkerd.npool.top \
@@ -29,7 +29,7 @@ helm install linkerd2 \
   linkerd/linkerd2 \
   -n linkerd
 
-helm install linkerd-viz \
+helm upgrade -i linkerd-viz \
   --set installNamespace=false \
   --set tap.externalSecret=true \
   --set-file tap.caBundle=ca.crt \
@@ -38,7 +38,7 @@ helm install linkerd-viz \
   linkerd/linkerd-viz \
   -n linkerd-viz
 
-helm install linkerd-jaeger \
+helm upgrade -i linkerd-jaeger \
   --set installNamespace=false \
   --set webhook.externalSecret=true \
   --set-file webhook.caBundle=ca.crt \

@@ -122,7 +122,7 @@ viz
 
 ```sh
   helm repo add linkerd https://helm.linkerd.io/stable
-  helm install linkerd2 \
+  helm upgrade -i linkerd2 \
     --cluster-domain=linkerd.npool.top \
     --identity-trust-domain=linkerd.npool.top \
     --set-file identityTrustAnchorsPEM=ca.crt \
@@ -328,7 +328,7 @@ spec:ls
 **注意这里需要设置 jaeger 的地址**
 
 ```sh
-  helm install linkerd-viz \
+  helm upgrade -i linkerd-viz \
     --set clusterDomain=linkerd.npool.top
     --set installNamespace=false \
     --set tap.externalSecret=true \
@@ -339,7 +339,7 @@ spec:ls
     linkerd/linkerd-viz \
     -n linkerd-viz
 
-  helm install linkerd-jaeger \
+  helm upgrade -i linkerd-jaeger \
     --set installNamespace=false \
     --set webhook.externalSecret=true \
     --set-file webhook.caBundle=ca.crt \
