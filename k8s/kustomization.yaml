@@ -1,3 +1,8 @@
+resources:
+  - certificate.yaml
+  - issuer.yaml
+  - viz-ingress.yaml
+
 generatorOptions:
   disableNameSuffixHash: true
 secretGenerator:
@@ -5,17 +10,17 @@ secretGenerator:
     namespace: linkerd
     type: kubernetes.io/tls
     files:
-      - tls.key=issuer.key
-      - tls.crt=issuer.crt
+      - tls.key=./root-cert/issuer.key
+      - tls.crt=./root-cert/issuer.crt
   - name: webhook-issuer-tls
     namespace: linkerd-viz
     type: kubernetes.io/tls
     files:
-      - tls.key=issuer.key
-      - tls.crt=issuer.crt
+      - tls.key=./root-cert/issuer.key
+      - tls.crt=./root-cert/issuer.crt
   - name: webhook-issuer-tls
     namespace: linkerd-jaeger
     type: kubernetes.io/tls
     files:
-      - tls.key=issuer.key
-      - tls.crt=issuer.crt
+      - tls.key=./root-cert/issuer.key
+      - tls.crt=./root-cert/issuer.crt

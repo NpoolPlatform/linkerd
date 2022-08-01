@@ -14,33 +14,31 @@ helm repo add linkerd https://helm.linkerd.io/stable
 # 2. issuer crt/key
 helm upgrade -i linkerd2 \
   --set installNamespace=false \
-  --cluster-domain=linkerd.npool.top \
-  --identity-trust-domain=linkerd.npool.top \
   --set identity.issuer.scheme=kubernetes.io/tls \
-  --set-file identityTrustAnchorsPEM=ca.crt \
-  --set-file identity.issuer.tls.crtPEM=issuer.crt \
-  --set-file identity.issuer.tls.keyPEM=issuer.key \
+  --set-file identityTrustAnchorsPEM=../k8s/root-cert/ca.crt \
+  --set-file identity.issuer.tls.crtPEM=../k8s/root-cert/issuer.crt \
+  --set-file identity.issuer.tls.keyPEM=../k8s/root-cert/issuer.key \
   --set policyValidator.externalSecret=true \
-  --set-file policyValidator.caBundle=ca.crt \
+  --set-file policyValidator.caBundle=../k8s/root-cert/ca.crt \
   --set proxyInjector.externalSecret=true \
-  --set-file proxyInjector.caBundle=ca.crt \
+  --set-file proxyInjector.caBundle=../k8s/root-cert/ca.crt \
   --set profileValidator.externalSecret=true \
-  --set-file profileValidator.caBundle=ca.crt \
+  --set-file profileValidator.caBundle=../k8s/root-cert/ca.crt \
   linkerd/linkerd2 \
   -n linkerd
 
 helm upgrade -i linkerd-viz \
   --set installNamespace=false \
   --set tap.externalSecret=true \
-  --set-file tap.caBundle=ca.crt \
+  --set-file tap.caBundle=../k8s/root-cert/ca.crt \
   --set tapInjector.externalSecret=true \
-  --set-file tapInjector.caBundle=ca.crt \
+  --set-file tapInjector.caBundle=../k8s/root-cert/ca.crt \
   linkerd/linkerd-viz \
   -n linkerd-viz
 
 helm upgrade -i linkerd-jaeger \
   --set installNamespace=false \
   --set webhook.externalSecret=true \
-  --set-file webhook.caBundle=ca.crt \
+  --set-file webhook.caBundle=../k8s/root-cert/ca.crt \
   linkerd/linkerd-jaeger \
   -n linkerd-jaeger
